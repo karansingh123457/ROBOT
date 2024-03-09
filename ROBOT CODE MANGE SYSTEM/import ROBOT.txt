@@ -1,0 +1,25 @@
+import rospy
+from std_msgs.msg import Float64
+
+class RobotController:
+    def __init__(self):
+        rospy.init_node('robot_controller', anonymous=True)
+        self.left_motor_pub = rospy.Publisher('/left_motor_cmd', Float64, queue_size=10)
+        self.right_motor_pub = rospy.Publisher('/right_motor_cmd', Float64, queue_size=10)
+
+    def control_motors(self, left_speed, right_speed):
+        left_msg = Float64()
+        right_msg = Float64()
+        left_msg.data = left_speed
+        right_msg.data = right_speed
+        self.left_motor_pub.publish(left_msg)
+        self.right_motor_pub.publish(right_msg)
+
+if __name__ == '__main__':
+    try:
+        controller = RobotController()
+        # Example control: move forward with equal speeds
+        controller.control_motors(1.0, 1.0)
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        
