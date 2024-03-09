@@ -1,0 +1,153 @@
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, UntypedFormGroup } from '@angular/forms';
+ 
+ 
+ 
+export interface form {
+  id: string,
+  formGroup: FormGroup,
+  metaData: any[],
+  transactionalData: any[],
+}
+ 
+@Component({
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
+})
+ 
+ 
+ 
+ 
+export class RegistrationComponent {
+ 
+  forms: form[] = [];
+  //@Output() output: EventEmitter<FormGroup> = new EventEmitter();
+  formJson: any;
+  public pageName: string = "REGISTRATION";
+ 
+ 
+  EmptyPalletOutGridData: any;
+ 
+ 
+  public fg = new UntypedFormGroup({
+  });
+ 
+  constructor(private fb: FormBuilder,
+    private http: HttpClient) { }
+ 
+ 
+  ngOnInit() {
+ 
+    /** FormJson for registration */
+    this.formJson = {
+      username: {
+        label: 'Enter Username',
+        value: '',
+        type: 'text',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+      email: {
+        label: 'Enter Email',
+        value: '',
+        type: 'text',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+      org: {
+        label: 'Enter Organization',
+        value: '',
+        type: 'text',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+      password: {
+        label: 'Enter Password',
+        value: '',
+        type: 'text',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+      password2: {
+        label: 'Enter Password',
+        value: '',
+        type: 'text',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+      type_of_user: {
+        label: 'Type of User',
+        value: '',
+        type: 'select',
+        readonly: false,
+        validation: {
+          required: true,
+        },
+      },
+     
+    }
+  }
+ 
+  type_of_user:any;
+  // enum type_of_user {
+ 
+  // }
+ 
+ 
+  GetLabelOfField(key: any): string {
+    let pdata = this.EmptyPalletOutGridData[key];
+    if (pdata != null || pdata != undefined) {
+      return this.EmptyPalletOutGridData[key].label;
+    }
+    else {
+      return key;
+    }
+  }
+ 
+ 
+ 
+  formGroupUpdated($event: any) {
+    console.log($event);
+    console.log("Parent Executed");
+    this.fg = $event;
+  }
+ 
+ 
+ 
+  onRegister() {
+    // let updateddata = this.fg.value;
+ 
+    // for (let prop of Object.keys(updateddata)) {
+    //   //console.log(prop);
+ 
+    //   Object.keys(updateddata).forEach(a => {
+    //     if (prop == a) {
+    //       // console.log(a);
+    //     }
+    //   })
+    // }
+    // this.emptyPalletOutList.push(updateddata);
+  }
+ 
+ 
+ 
+  //Use for Reset Form
+  Reset() {
+    this.fg.reset();
+  }
+ 
+ 
+ 
+}
